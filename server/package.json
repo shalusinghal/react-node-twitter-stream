@@ -1,0 +1,16 @@
+{
+  "name": "twitter-stream",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Shalu Singhal",
+  "license": "MIT",
+  "dependencies": {
+    "nconf": "^0.10.0",
+    "socket.io": "^2.1.1",
+    "twit": "^2.2.11"
+  }
+}
