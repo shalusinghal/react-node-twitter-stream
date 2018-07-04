@@ -1,8 +1,21 @@
 import React, { Component } from 'react';
+import { CSSTransitionGroup } from 'react-transition-group';
 
 class Tweets extends Component {
-    componentDidMount() {
-        
+    constructor(props) {
+        super(props);
+
+        // We use local state so that we can delay rendering to, say 1 second. This 
+        // improves rendering, compared to rendering on every incoming tweet
+        this.state = { tweets : [] };
+    }
+
+    componentDidMount () {
+        setInterval(() => {
+            this.setState({
+                tweets: this.props.tweets
+            });
+        }, 2000)
     }
  
     linkify (tweet) {
@@ -23,16 +36,27 @@ class Tweets extends Component {
     }
 
     render() {
-        if (this.props.tweets.length === 0) {
+        if (this.state.tweets.length === 0) {
             return <div className="text-center">Waiting for tweets...</div>;
         }
         else {
-            return this.props.tweets.map((tweet, index) => {
-                return <div className="card" key={ index }>
+            let renderTweets = this.state.tweets.map((tweet, index) => {
+                return <div className="card tweet" key={ tweet.id }>
                     <div className="card-body" dangerouslySetInnerHTML={ { __html: this.linkify(tweet) } }>
                     </div>
                 </div>
             });
+
+            return (
+                <div className="tweets">
+                    <CSSTransitionGroup
+                      transitionName="fade"
+                      transitionEnterTimeout={500}
+                      transitionLeaveTimeout={0}>
+                      { renderTweets }
+                    </CSSTransitionGroup>
+                </div>
+            )
         }
     }
 }

@@ -56,7 +56,7 @@ class HeatMap extends Component {
                 return [key.toLowerCase(), this.props.heatMap[key]];
             });
 
-            chart.series[0].setData(data);
+            setTimeout(() => chart.series[0].setData(data));
         }, 10000);
     }
 

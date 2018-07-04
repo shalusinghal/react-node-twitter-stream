@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TweetStream from './containers/TweetStream';
 import TweetList from './containers/TweetList';
 import HeatMapContainer from './containers/HeatMapContainer';
+import TagCloudContainer from './containers/TagCloudContainer';
 import './main.css';
 
 class Main extends Component {
@@ -21,6 +22,10 @@ class Main extends Component {
                             <div className="col-md-12">
                                 <h1>HeatMap</h1>
                                 <HeatMapContainer/>
+                            </div>
+                            <div className="col-md-12">
+                                <h1>Tag Cloud</h1>
+                                <TagCloudContainer/>
                             </div>
                         </div>
                     </div>

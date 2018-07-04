@@ -1,3 +1,8 @@
 body {
-  padding-top: 5rem;
+	padding-top: 5rem;
+}
+
+.tweets {
+	max-height: 800px;
+	overflow-y: scroll;
 }

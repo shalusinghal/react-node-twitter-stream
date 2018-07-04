@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
-import HeatMap from '../maps/HeatMap';
+import Cloud from '../tags/Cloud';
 
 const mapStateToProps = (state) => ({
-    heatMap: state.heatMap
+    wordFreq: state.wordFreq
 });
 
 export default connect(
     mapStateToProps
-)(HeatMap);
+)(Cloud);
