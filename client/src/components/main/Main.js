@@ -9,6 +9,7 @@ class Main extends Component {
         return (
             <main role="main" className="container-fluid">
               <div className="main-container">
+                <p className="lead">Please wait for a few minutes for HeatMap to populate. Not all tweets have location data.</p>
                 <div className="row">
                     <div className="col-md-6">
                         <h1>Tweets</h1>
