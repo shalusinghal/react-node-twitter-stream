@@ -13,7 +13,7 @@ const twitter = new Twit({
     access_token_secret: nconf.get('TWITTER_ACCESS_TOKEN_SECRET')
 });
 
-const keywords = ['javascript'];
+const keywords = ['health'];
 
 // Create tweet stream
 const stream = twitter.stream('statuses/filter', { track:  keywords });
@@ -34,6 +34,4 @@ stream.on('tweet', (tweet) => {
     };
 
     io.emit('tweets', trimTweet);
-
-    console.log(tweet);
 });

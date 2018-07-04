@@ -27,16 +27,12 @@ class Tweets extends Component {
             return <div className="text-center">Waiting for tweets...</div>;
         }
         else {
-            let tweetList = this.props.tweets.map((tweet, index) => {
+            return this.props.tweets.map((tweet, index) => {
                 return <div className="card" key={ index }>
                     <div className="card-body" dangerouslySetInnerHTML={ { __html: this.linkify(tweet) } }>
                     </div>
                 </div>
             });
-
-            return (
-                tweetList
-            );
         }
     }
 }
