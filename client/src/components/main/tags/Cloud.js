@@ -7,6 +7,7 @@ class Cloud extends Component {
         // Instead of redrawing tagcloud, we gernerate it every 10 seconds
         setInterval(() => {
             wordCloud(this.props.wordFreq)
+            this.props.trimTags();
         }, 10000);
     }
 
@@ -23,11 +24,10 @@ const wordCloud = (words) => {
         .words(Object.keys(words).map((word) => {
             return {
                 text: word,
-                size: 10 + Math.sqrt(words[word])
+                size: 10 + Math.sqrt(words[word].count)
             };
         }))
         .padding(3)
-        .font('Impact')
         .fontSize((word) => word.size)
         .on('end', draw);
 
@@ -49,7 +49,6 @@ const draw = (words) => {
             .data(words)
             .enter().append('text')
             .style('font-size', function(d) { return d.size + 'px'; })
-            .style('font-family', 'Impact')
             .attr('text-anchor', 'middle')
             .attr('transform', function(d) {
                 return 'translate(' + [d.x, d.y] + ')rotate(' + d.rotate + ')';

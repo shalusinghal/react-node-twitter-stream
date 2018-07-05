@@ -3,9 +3,9 @@ import stemmer from 'porter-stemmer';
 const wordFreq = (state = {}, action) => {
     switch (action.type) {
         case 'NEW_TWEET':
-            let r = freqCounter(state, action.tweet.full_text);
-            // console.log(Object.keys(r).length);
-            return r;
+            return freqCounter(state, action.tweet.full_text);
+        case 'TRIM_TAGS':
+            return trimTags(state);
         default:
             return state;
     }
@@ -31,7 +31,8 @@ const freqCounter = (state, text) => {
     const stems = Object.create(null);
 
     // Remove characters that do not belong to a word
-    const words = text.split(/[^A-Za-zéÉ'’_\-0-9@.]+/);
+    const words = text.replace(/[A-Za-z]+:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&?/.=]+/g, '') // Remove URLs
+        .split(/[^A-Za-zéÉ'’_\-0-9@.]+/);
 
     words.forEach((word) => {
         word = word
@@ -47,7 +48,7 @@ const freqCounter = (state, text) => {
         }
 
         // Skip if the word is shorter than 4 characters
-        if (!word || word.length < 4) {
+        if (!word || word.length < 3) {
             return;
         }
 
@@ -85,19 +86,60 @@ const freqCounter = (state, text) => {
         }
     });
 
+    // When we are limiting number of tags, we use time to remove oldest tags first
+    const time = (new Date()).getTime();
+
     // Push each "stem" into terms as word
     for (let stem in stems) {
         let term = stems[stem].word;
 
         if (!(term in state)) {
-            state[term] = stems[stem].count;
+            state[term] = { count: stems[stem].count };
         }
         else {
-            state[term] += stems[stem].count;
+            state[term].count += stems[stem].count;
         }
+
+        state[term].time = time; 
     }
 
     return state;
 };
+
+const trimTags = (state) => {
+    // Convert to array
+    const tagArr = Object.keys(state).map((key) => {
+        return {
+            key,
+            count: state[key].count,
+            time: state[key].time
+        };
+    });
+
+    // Sort by count and then by time
+    const sortedArr = tagArr.sort((a, b) => {
+        if (a.count !== b.count) {
+            return b.count - a.count;
+        }
+        else {
+            return b.time - a.time;
+        }
+    });
+
+    // Keep first 500 tags. This way we have 500 most frequent tags. If tags have same count,
+    // those that appeared earlier get removed first
+    const trimedArr = sortedArr.slice(0, 500);
+
+    const newState = {};
+
+    trimedArr.forEach((item) => {
+        newState[item.key] = {
+            count: item.count,
+            time: item.time
+        };
+    });
+
+    return newState;
+}
 
 export default wordFreq;
