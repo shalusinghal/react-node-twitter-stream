@@ -13,6 +13,7 @@ This project demonstrates use of React.js and Node.js server to display tweet st
 ## Running
 
  - Create `config.json` file in server and put Twitter's Application Credentials there.
+ - Do `npm install` in both client and server.
  - Run the server using `node index.js`
  - Run client in seperate terminal using `npm start`
 
