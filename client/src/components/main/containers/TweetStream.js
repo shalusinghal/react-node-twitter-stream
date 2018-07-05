@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { newTweet, updateHeatMap, updateWordFreq } from '../../../actions';
+import { newTweet } from '../../../actions';
 
 import io from 'socket.io-client';
 
@@ -13,8 +13,6 @@ class TweetStream extends Component {
 
             socket.on('tweets', (data) => {
                 this.props.newTweet(data);
-                this.props.updateHeatMap(data);
-                this.props.updateWordFreq(data);
             });
         });
 
@@ -31,9 +29,7 @@ class TweetStream extends Component {
 }
 
 const mapDispatchToProps = {
-    newTweet,
-    updateHeatMap,
-    updateWordFreq
+    newTweet
 };
 
 

@@ -2,7 +2,7 @@ import stemmer from 'porter-stemmer';
 
 const wordFreq = (state = {}, action) => {
     switch (action.type) {
-        case 'UPDATE_WORD_FREQ':
+        case 'NEW_TWEET':
             let r = freqCounter(state, action.tweet.full_text);
             // console.log(Object.keys(r).length);
             return r;

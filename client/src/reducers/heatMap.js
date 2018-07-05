@@ -1,6 +1,6 @@
 const heatMap = (state = {}, action) => {
     switch (action.type) {
-        case 'UPDATE_HEAT_MAP':
+        case 'NEW_TWEET':
             if (action.tweet.place) {
             	if (state[action.tweet.place.country_code] !== undefined) {
             		state[action.tweet.place.country_code]++;
