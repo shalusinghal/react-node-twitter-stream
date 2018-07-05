@@ -6,7 +6,7 @@ const tweets = (state = [], action) => {
                 ...state
             ];
 
-            // Allow max 1000 tweets at a time to reduce page getting unresponsive
+            // Allow max 100 tweets at a time to reduce page getting unresponsive
             return newState.slice(0, 100);
         default:
             return state;
